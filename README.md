@@ -1,3 +1,4 @@
-Web Socket com Php
+# Web Socket com Php
 
-para iniciar -> php server.php
+Para iniciar o servidor WebSocket
+> php server.php
