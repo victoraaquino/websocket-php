@@ -5,23 +5,27 @@ use Ratchet\ConnectionInterface;
 
 class Chat implements MessageComponentInterface {
 
-    public $clients;
+    protected $clients;
 
     public function __construct() {
+        //inicia um novo "objeto de objetos"
         $this->clients = new \SplObjectStorage;
     }
 
     public function onOpen( ConnectionInterface $conn ) {
+        //adiciona a nova conexao aos clients da aplicacao
         $this->clients->attach($conn);
     }
 
     public function onMessage( ConnectionInterface $from, $msg ) {
+        //emit um socket para todos os clients
         foreach ($this->clients as $client) {
             $client->send($msg);
         }
     }
 
     public function onClose( ConnectionInterface $conn ) {
+        //desassocia o client q fechou conexao
         $this->clients->detach($conn);
     }
 

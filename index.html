@@ -9,20 +9,23 @@
 
 <body>
     <div id="content">
-        <!-- text here -->
     </div>
     
     <input type="text" id="txt_message">
     <button id="btn_send">
         Enviar
     </button>
+
     <script>
+        //cria conexao websocket com o backend
         let conn = new WebSocket('ws:localhost:8080');
 
+        //abre uma conexao com o websocket
         conn.onopen = (e) => {
             console.log("Conexao estabelecida");
         }
 
+        //retorno do websocket emitido
         conn.onmessage = (e) => {
             const res = JSON.parse(e.data);
             const content = document.getElementById("content");
@@ -36,6 +39,7 @@
             const req = {
                 message : txtMessage.value
             }
+            //mandando informacoes para o servidor websocket
             conn.send(JSON.stringify(req));
             txtMessage.value = "";
         });

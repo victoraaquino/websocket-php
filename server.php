@@ -6,6 +6,8 @@ use libs\socket\Chat;
 
 require 'vendor/autoload.php';
 
+//cria um servidor WebSocket passando a classe
+//usada para emitir e receber os sockets
 $server = IoServer::factory(
     new HttpServer(
         new WsServer(
@@ -15,4 +17,5 @@ $server = IoServer::factory(
     8080
 );
 
+//inicia o servidor
 $server->run();
