@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+
+<body>
+    <div id="content">
+        <!-- text here -->
+    </div>
+    
+    <input type="text" id="txt_message">
+    <button id="btn_send">
+        Enviar
+    </button>
+    <script>
+        let conn = new WebSocket('ws:localhost:8080');
+
+        conn.onopen = (e) => {
+            console.log("Conexao estabelecida");
+        }
+
+        conn.onmessage = (e) => {
+            const res = JSON.parse(e.data);
+            const content = document.getElementById("content");
+            content.innerHTML += `<h4>${res.message}</h4><br/>` 
+        }
+
+        const btnSend = document.getElementById("btn_send");
+        const txtMessage = document.getElementById("txt_message");
+
+        btnSend.addEventListener("click", () => {
+            const req = {
+                message : txtMessage.value
+            }
+            conn.send(JSON.stringify(req));
+            txtMessage.value = "";
+        });
+
+    </script>
+</body>
+
+</html>
